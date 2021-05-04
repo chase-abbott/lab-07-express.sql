@@ -10,14 +10,13 @@ async function run() {
 
     // run a query to create tables
     await client.query(`          
-      CREATE TABLE cats (
+      CREATE TABLE players (
         id SERIAL PRIMARY KEY NOT NULL,
-        name VARCHAR(512) NOT NULL,
-        type VARCHAR(512) NOT NULL,
-        url VARCHAR(1024) NOT NULL,
-        year INTEGER NOT NULL,
-        lives INTEGER NOT NULL,
-        is_sidekick BOOLEAN DEFAULT FALSE
+        name VARCHAR(64) NOT NULL,
+        position VARCHAR(32) NOT NULL,
+        year_enrolled INTEGER NOT NULL,
+        is_transfer BOOLEAN NOT NULL,
+        is_active BOOLEAN DEFAULT FALSE
       );
     `);
 
