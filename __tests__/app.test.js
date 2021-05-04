@@ -15,93 +15,61 @@ describe('API Routes', () => {
     return client.end();
   });
 
-  const expectedCats = [
+  const expectedPlayers = [
     {
       id: expect.any(Number),
-      name: 'Felix',
-      type: 'Tuxedo',
-      url: 'cats/felix.png',
-      year: 1892,
-      lives: 3,
-      isSidekick: false
+      name: 'Marcus Mariota',
+      position: 'Quarterback',
+      yearEnrolled: 2011,
+      isTransfer: false,
+      isActive: false,
     },
     {
       id: expect.any(Number),
-      name: 'Garfield',
-      type: 'Orange Tabby',
-      url: 'cats/garfield.jpeg',
-      year: 1978,
-      lives: 7,
-      isSidekick: false
+      name: 'Royce Freeman',
+      position: 'Running Back',
+      yearEnrolled: 2014,
+      isTransfer: false,
+      isActive: false,
     },
     {
       id: expect.any(Number),
-      name: 'Duchess',
-      type: 'Angora',
-      url: 'cats/duchess.jpeg',
-      year: 1970,
-      lives: 9,
-      isSidekick: false
+      name: 'Donte Thorton',
+      position: 'Wide Reciever',
+      yearEnrolled: 2021,
+      isTransfer: false,
+      isActive: true,
     },
     {
       id: expect.any(Number),
-      name: 'Stimpy',
-      type: 'Manx',
-      url: 'cats/stimpy.jpeg',
-      year: 1990,
-      lives: 1,
-      isSidekick: true
+      name: 'Troy Dye',
+      position: 'Linebacker',
+      yearEnrolled: 2016,
+      isTransfer: false,
+      isActive: false,
     },
     {
       id: expect.any(Number),
-      name: 'Sylvester',
-      type: 'Tuxedo',
-      url: 'cats/sylvester.jpeg',
-      year: 1945,
-      lives: 1,
-      isSidekick: true
-    },
-    {
-      id: expect.any(Number),
-      name: 'Tigger',
-      type: 'Orange Tabby',
-      url: 'cats/tigger.jpeg',
-      year: 1928,
-      lives: 8,
-      isSidekick: false
-    },
-    {
-      id: expect.any(Number),
-      name: 'Hello Kitty',
-      type: 'Angora',
-      url: 'cats/hello-kitty.jpeg',
-      year: 1974,
-      lives: 9,
-      isSidekick: false
-    },
-    {
-      id: expect.any(Number),
-      name: 'Hobbs',
-      type: 'Orange Tabby',
-      url: 'cats/hobbs.jpeg',
-      year: 1985,
-      lives: 6,
-      isSidekick: true
+      name: 'Anthony Brown',
+      position: 'Quarterback',
+      yearEnrolled: 2020,
+      isTransfer: true,
+      isActive: true,
     }
   ];
 
   // If a GET request is made to /api/cats, does:
   // 1) the server respond with status of 200
   // 2) the body match the expected API data?
-  it('GET /api/cats', async () => {
+  it('GET /api/players', async () => {
     // act - make the request
-    const response = await request.get('/api/cats');
+    const response = await request.get('/api/players');
 
     // was response OK (200)?
     expect(response.status).toBe(200);
 
     // did it return the data we expected?
-    expect(response.body).toEqual(expectedCats);
+    expect(response.body).toEqual(expectedPlayers);
 
   });
 
@@ -111,6 +79,6 @@ describe('API Routes', () => {
   test('GET /api/cats/:id', async () => {
     const response = await request.get('/api/cats/2');
     expect(response.status).toBe(200);
-    expect(response.body).toEqual(expectedCats[1]);
+    expect(response.body).toEqual(expectedPlayers[1]);
   });
 });

@@ -12,10 +12,10 @@ async function run() {
     await Promise.all(
       players.map(player => {
         return client.query(`
-          INSERT INTO players (name, type, url, year, lives, is_sidekick)
-          VALUES ($1, $2, $3, $4, $5, $6);
+          INSERT INTO players (name, position, year_enrolled, is_transfer, is_active )
+          VALUES ($1, $2, $3, $4, $5);
         `,
-        [player.name, player.type, player.url, player.year, player.lives, player.isSidekick]);
+        [player.name, player.position, player.yearEnrolled, player.isTransfer, player.isActive]);
       })
     );
     
