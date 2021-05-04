@@ -3,6 +3,7 @@ import supertest from 'supertest';
 import client from '../lib/client.js';
 import { execSync } from 'child_process';
 
+
 const request = supertest(app);
 
 describe('API Routes', () => {
@@ -17,7 +18,7 @@ describe('API Routes', () => {
 
   const expectedPlayers = [
     {
-      id: expect.any(Number),
+      id: 1,
       name: 'Marcus Mariota',
       position: 'Quarterback',
       yearEnrolled: 2011,
@@ -25,7 +26,7 @@ describe('API Routes', () => {
       isActive: false,
     },
     {
-      id: expect.any(Number),
+      id: 2,
       name: 'Royce Freeman',
       position: 'Running Back',
       yearEnrolled: 2014,
@@ -33,7 +34,7 @@ describe('API Routes', () => {
       isActive: false,
     },
     {
-      id: expect.any(Number),
+      id: 3,
       name: 'Donte Thorton',
       position: 'Wide Reciever',
       yearEnrolled: 2021,
@@ -41,7 +42,7 @@ describe('API Routes', () => {
       isActive: true,
     },
     {
-      id: expect.any(Number),
+      id: 4,
       name: 'Troy Dye',
       position: 'Linebacker',
       yearEnrolled: 2016,
@@ -49,7 +50,7 @@ describe('API Routes', () => {
       isActive: false,
     },
     {
-      id: expect.any(Number),
+      id: 5,
       name: 'Anthony Brown',
       position: 'Quarterback',
       yearEnrolled: 2020,
@@ -76,9 +77,10 @@ describe('API Routes', () => {
   // If a GET request is made to /api/cats/:id, does:
   // 1) the server respond with status of 200
   // 2) the body match the expected API data for the cat with that id?
-  test('GET /api/cats/:id', async () => {
-    const response = await request.get('/api/cats/2');
+  test('GET /api/players/:id', async () => {
+    const response = await request.get('/api/players/1');
+    
     expect(response.status).toBe(200);
-    expect(response.body).toEqual(expectedPlayers[1]);
+    expect(response.body).toEqual(expectedPlayers[0]);
   });
 });
