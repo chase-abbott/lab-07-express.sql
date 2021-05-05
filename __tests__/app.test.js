@@ -7,10 +7,43 @@ import { execSync } from 'child_process';
 const request = supertest(app);
 
 describe('CRUD routs', () => {
+  beforeAll(() => {
+    execSync('npm run setup-db');
+  });
 
+  afterAll(async () => {
+    return client.end();
+  });
+
+  let marcus = {
+    id: expect.any(Number),
+    name: 'Marcus Mariota',
+    position: 'Quarterback',
+    yearEnrolled: 2011,
+    isTransfer: false,
+    isActive: false,
+  };
+
+  let royce = {
+    id: expect.any(Number),
+    name: 'Royce Freeman',
+    position: 'Running Back',
+    yearEnrolled: 2014,
+    isTransfer: false,
+    isActive: false,
+  };
+
+  let donte = {
+    id: expect.any(Number),
+    name: 'Donte Thorton',
+    position: 'Wide Reciever',
+    yearEnrolled: 2021,
+    isTransfer: false,
+    isActive: true,
+  };
 });
 
-describe('API Routes', () => {
+describe.skip('API Routes', () => {
 
   beforeAll(() => {
     execSync('npm run setup-db');
@@ -126,7 +159,6 @@ describe('API Routes', () => {
 
   });
 
-
   // If a GET request is made to /api/cats/:id, does:
   // 1) the server respond with status of 200
   // 2) the body match the expected API data for the cat with that id?
@@ -136,6 +168,4 @@ describe('API Routes', () => {
     expect(response.status).toBe(200);
     expect(response.body).toEqual(expectedPlayers[0]);
   });
-
-  
 });
