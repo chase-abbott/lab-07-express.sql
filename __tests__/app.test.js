@@ -28,23 +28,23 @@ describe('CRUD routs', () => {
     isActive: false,
   };
 
-  let royce = {
-    id: expect.any(Number),
-    name: 'Royce Freeman',
-    position: 'Running Back',
-    yearEnrolled: 2014,
-    isTransfer: false,
-    isActive: false,
-  };
+  // let royce = {
+  //   id: expect.any(Number),
+  //   name: 'Royce Freeman',
+  //   position: 'Running Back',
+  //   yearEnrolled: 2014,
+  //   isTransfer: false,
+  //   isActive: false,
+  // };
 
-  let donte = {
-    id: expect.any(Number),
-    name: 'Donte Thorton',
-    position: 'Wide Reciever',
-    yearEnrolled: 2021,
-    isTransfer: false,
-    isActive: true,
-  };
+  // let donte = {
+  //   id: expect.any(Number),
+  //   name: 'Donte Thorton',
+  //   position: 'Wide Reciever',
+  //   yearEnrolled: 2021,
+  //   isTransfer: false,
+  //   isActive: true,
+  // };
 
   it('POST /api/players', async () => {
     const response = await request
@@ -55,6 +55,15 @@ describe('CRUD routs', () => {
     expect(response.body).toEqual(marcus);
 
     marcus = response.body;
+  });
+
+  it('PUT /api/players/:id', async () => {
+    marcus.isActive = true;
+    const response = await request
+      .put(`/api/players/${marcus.id}`)
+      .send(marcus);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(marcus);
   });
 });
 
