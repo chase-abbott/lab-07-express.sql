@@ -6,6 +6,10 @@ import { execSync } from 'child_process';
 
 const request = supertest(app);
 
+describe('CRUD routs', () => {
+
+});
+
 describe('API Routes', () => {
 
   beforeAll(() => {
@@ -18,7 +22,7 @@ describe('API Routes', () => {
 
   const expectedPlayers = [
     {
-      id: 1,
+      id: expect.any(Number),
       name: 'Marcus Mariota',
       position: 'Quarterback',
       yearEnrolled: 2011,
@@ -26,7 +30,7 @@ describe('API Routes', () => {
       isActive: false,
     },
     {
-      id: 2,
+      id: expect.any(Number),
       name: 'Royce Freeman',
       position: 'Running Back',
       yearEnrolled: 2014,
@@ -34,7 +38,7 @@ describe('API Routes', () => {
       isActive: false,
     },
     {
-      id: 3,
+      id: expect.any(Number),
       name: 'Donte Thorton',
       position: 'Wide Reciever',
       yearEnrolled: 2021,
@@ -42,7 +46,7 @@ describe('API Routes', () => {
       isActive: true,
     },
     {
-      id: 4,
+      id: expect.any(Number),
       name: 'Troy Dye',
       position: 'Linebacker',
       yearEnrolled: 2016,
@@ -50,11 +54,59 @@ describe('API Routes', () => {
       isActive: false,
     },
     {
-      id: 5,
+      id: expect.any(Number),
       name: 'Anthony Brown',
       position: 'Quarterback',
       yearEnrolled: 2020,
       isTransfer: true,
+      isActive: true,
+    },
+    {
+      id: expect.any(Number),
+      name: 'Mycah Pittman',
+      position: 'Wide Reciever',
+      yearEnrolled: 2018,
+      isTransfer: false,
+      isActive: true,
+    },
+    {
+      id: expect.any(Number),
+      name: 'Arik Armstead',
+      position: 'Defensive End',
+      yearEnrolled: 2011,
+      isTransfer: false,
+      isActive: false,
+    },
+    {
+      id: expect.any(Number),
+      name: 'Devon Williams',
+      position: 'Wide Reciever',
+      yearEnrolled: 2020,
+      isTransfer: true,
+      isActive: true,
+    },
+    {
+      id: expect.any(Number),
+      name: 'Ifo Ekpre-Olomu',
+      position: 'Cornerback',
+      yearEnrolled: 2010,
+      isTransfer: false,
+      isActive: false,
+    },
+    {
+      id: expect.any(Number),
+      name: 'Joe Walker',
+      position: 'Linebacker',
+      yearEnrolled: 2012,
+      isTransfer: true,
+      isActive: false,
+    },
+    {
+      id: expect.any(Number),
+      name: 'Travis Dye',
+      position: 'Running back',
+      yearEnrolled: 2018,
+      isTransfer: false,
       isActive: true,
     }
   ];
@@ -74,6 +126,7 @@ describe('API Routes', () => {
 
   });
 
+
   // If a GET request is made to /api/cats/:id, does:
   // 1) the server respond with status of 200
   // 2) the body match the expected API data for the cat with that id?
@@ -83,4 +136,6 @@ describe('API Routes', () => {
     expect(response.status).toBe(200);
     expect(response.body).toEqual(expectedPlayers[0]);
   });
+
+  
 });
