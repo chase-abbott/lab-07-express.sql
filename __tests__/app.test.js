@@ -4,17 +4,21 @@ import client from '../lib/client.js';
 import { execSync } from 'child_process';
 
 
+
 const request = supertest(app);
 
 describe('CRUD routs', () => {
-  beforeAll(() => {
-    execSync('npm run setup-db');
-  });
-
   afterAll(async () => {
     return client.end();
   });
 
+  beforeAll(() => {
+    execSync('npm run recreate-tables');
+  });
+
+  // afterAll(async () => {
+  //   return client.end();
+  // });
   let marcus = {
     id: expect.any(Number),
     name: 'Marcus Mariota',
@@ -41,6 +45,17 @@ describe('CRUD routs', () => {
     isTransfer: false,
     isActive: true,
   };
+
+  it('POST /api/players', async () => {
+    const response = await request
+      .post('/api/players')
+      .send(marcus);
+  
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(marcus);
+
+    marcus = response.body;
+  });
 });
 
 describe.skip('API Routes', () => {
@@ -162,7 +177,7 @@ describe.skip('API Routes', () => {
   // If a GET request is made to /api/cats/:id, does:
   // 1) the server respond with status of 200
   // 2) the body match the expected API data for the cat with that id?
-  test('GET /api/players/:id', async () => {
+  it('GET /api/players/:id', async () => {
     const response = await request.get('/api/players/1');
     
     expect(response.status).toBe(200);
