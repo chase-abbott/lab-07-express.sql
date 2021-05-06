@@ -109,10 +109,10 @@ describe('API ROUTES', () => {
       expect(response.body).toEqual(expect.arrayContaining(expected));
     });
 
-    it.skip('GET /api/players/:id', async () => {
+    it('GET /api/players/:id', async () => {
       const response = await request.get(`/api/players/${marcus.id}`);
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(marcus);
+      expect(response.body).toEqual({ ...marcus, userName: user.name });
     });
 
     it.skip('DELETE /api/players/:id', async () => {
