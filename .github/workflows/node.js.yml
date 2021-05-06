@@ -25,4 +25,4 @@ jobs:
     - run: npm test -- --passWithNoTests
       env:
         CI: true
-        DATABASE_URL: postgres://ehbddyzysgzhdv:089ba9c258db50f97a43cfc92c30fa97db2a93c56419547007e3509fb85e727b@ec2-35-174-35-242.compute-1.amazonaws.com:5432/d514au0k4bqi45
+        DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
