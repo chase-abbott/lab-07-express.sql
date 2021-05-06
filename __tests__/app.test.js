@@ -3,139 +3,216 @@ import supertest from 'supertest';
 import client from '../lib/client.js';
 import { execSync } from 'child_process';
 
-
 const request = supertest(app);
 
-describe('CRUD routs', () => {
-
-});
-
-describe('API Routes', () => {
-
-  beforeAll(() => {
-    execSync('npm run setup-db');
-  });
-
+describe('API ROUTES', () => {
+  
   afterAll(async () => {
     return client.end();
   });
 
-  const expectedPlayers = [
-    {
+  describe('CRUD routes', () => {
+
+    let user;
+
+    beforeAll(async () => {
+      execSync('npm run recreate-tables');
+  
+      const response = await request
+        .post('/api/auth/signup')
+        .send({
+          name: 'Chase',
+          email: 'cabbott93@gmail.com',
+          password: 'x'
+        });
+  
+      expect(response.status).toBe(200);
+
+      user = response.body;
+      console.log(user);
+    });
+
+    let marcus = {
       id: expect.any(Number),
       name: 'Marcus Mariota',
       position: 'Quarterback',
       yearEnrolled: 2011,
       isTransfer: false,
       isActive: false,
-    },
-    {
+    };
+
+    let royce = {
       id: expect.any(Number),
       name: 'Royce Freeman',
       position: 'Running Back',
       yearEnrolled: 2014,
       isTransfer: false,
       isActive: false,
-    },
-    {
+    };
+
+    let donte = {
       id: expect.any(Number),
       name: 'Donte Thorton',
       position: 'Wide Reciever',
       yearEnrolled: 2021,
       isTransfer: false,
       isActive: true,
-    },
-    {
-      id: expect.any(Number),
-      name: 'Troy Dye',
-      position: 'Linebacker',
-      yearEnrolled: 2016,
-      isTransfer: false,
-      isActive: false,
-    },
-    {
-      id: expect.any(Number),
-      name: 'Anthony Brown',
-      position: 'Quarterback',
-      yearEnrolled: 2020,
-      isTransfer: true,
-      isActive: true,
-    },
-    {
-      id: expect.any(Number),
-      name: 'Mycah Pittman',
-      position: 'Wide Reciever',
-      yearEnrolled: 2018,
-      isTransfer: false,
-      isActive: true,
-    },
-    {
-      id: expect.any(Number),
-      name: 'Arik Armstead',
-      position: 'Defensive End',
-      yearEnrolled: 2011,
-      isTransfer: false,
-      isActive: false,
-    },
-    {
-      id: expect.any(Number),
-      name: 'Devon Williams',
-      position: 'Wide Reciever',
-      yearEnrolled: 2020,
-      isTransfer: true,
-      isActive: true,
-    },
-    {
-      id: expect.any(Number),
-      name: 'Ifo Ekpre-Olomu',
-      position: 'Cornerback',
-      yearEnrolled: 2010,
-      isTransfer: false,
-      isActive: false,
-    },
-    {
-      id: expect.any(Number),
-      name: 'Joe Walker',
-      position: 'Linebacker',
-      yearEnrolled: 2012,
-      isTransfer: true,
-      isActive: false,
-    },
-    {
-      id: expect.any(Number),
-      name: 'Travis Dye',
-      position: 'Running back',
-      yearEnrolled: 2018,
-      isTransfer: false,
-      isActive: true,
-    }
-  ];
+    };
 
-  // If a GET request is made to /api/cats, does:
-  // 1) the server respond with status of 200
-  // 2) the body match the expected API data?
-  it('GET /api/players', async () => {
-    // act - make the request
-    const response = await request.get('/api/players');
+    it('POST /api/players', async () => {
+      marcus.userId = user.id;
+     
+      const response = await request
+        .post('/api/players')
+        .send(marcus);
+     
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(marcus);
 
-    // was response OK (200)?
-    expect(response.status).toBe(200);
+      marcus = response.body;
+    });
 
-    // did it return the data we expected?
-    expect(response.body).toEqual(expectedPlayers);
+    it.skip('PUT /api/players/:id', async () => {
+      marcus.isActive = true;
+      const response = await request
+        .put(`/api/players/${marcus.id}`)
+        .send(marcus);
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(marcus);
+    });
 
+    it.skip('GET /api/players', async () => {
+      const playerOne = await request
+        .post('/api/players')
+        .send(royce);
+      royce = playerOne.body;
+      const playerTwo = await request
+        .post('/api/players')
+        .send(donte);
+      donte = playerTwo.body;
+
+      const response = await request.get('/api/players');
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(expect.arrayContaining([marcus, donte, royce]));
+    });
+
+    it.skip('GET /api/players/:id', async () => {
+      const response = await request.get(`/api/players/${marcus.id}`);
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(marcus);
+    });
+
+    it.skip('DELETE /api/players/:id', async () => {
+      const response = await request 
+        .delete(`/api/players/${marcus.id}`);
+      const secondResponse = await request.get('/api/players');
+      expect(response.status).toBe(200);
+      expect(secondResponse.body).toEqual(expect.arrayContaining([donte, royce]));
+    });
   });
 
+  describe.skip('Re-seed data', () => {
 
-  // If a GET request is made to /api/cats/:id, does:
-  // 1) the server respond with status of 200
-  // 2) the body match the expected API data for the cat with that id?
-  test('GET /api/players/:id', async () => {
-    const response = await request.get('/api/players/1');
-    
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual(expectedPlayers[0]);
-  });
+    beforeAll(() => {
+      execSync('npm run setup-db');
+    });
 
+    it('GET all players', async () => {
+      const response = await request.get('/api/players');
   
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual([
+        {
+          id: expect.any(Number),
+          name: 'Marcus Mariota',
+          position: 'Quarterback',
+          yearEnrolled: 2011,
+          isTransfer: false,
+          isActive: false,
+        },
+        {
+          id: expect.any(Number),
+          name: 'Royce Freeman',
+          position: 'Running Back',
+          yearEnrolled: 2014,
+          isTransfer: false,
+          isActive: false,
+        },
+        {
+          id: expect.any(Number),
+          name: 'Donte Thorton',
+          position: 'Wide Reciever',
+          yearEnrolled: 2021,
+          isTransfer: false,
+          isActive: true,
+        },
+        {
+          id: expect.any(Number),
+          name: 'Troy Dye',
+          position: 'Linebacker',
+          yearEnrolled: 2016,
+          isTransfer: false,
+          isActive: false,
+        },
+        {
+          id: expect.any(Number),
+          name: 'Anthony Brown',
+          position: 'Quarterback',
+          yearEnrolled: 2020,
+          isTransfer: true,
+          isActive: true,
+        },
+        {
+          id: expect.any(Number),
+          name: 'Mycah Pittman',
+          position: 'Wide Reciever',
+          yearEnrolled: 2018,
+          isTransfer: false,
+          isActive: true,
+        },
+        {
+          id: expect.any(Number),
+          name: 'Arik Armstead',
+          position: 'Defensive End',
+          yearEnrolled: 2011,
+          isTransfer: false,
+          isActive: false,
+        },
+        {
+          id: expect.any(Number),
+          name: 'Devon Williams',
+          position: 'Wide Reciever',
+          yearEnrolled: 2020,
+          isTransfer: true,
+          isActive: true,
+        },
+        {
+          id: expect.any(Number),
+          name: 'Ifo Ekpre-Olomu',
+          position: 'Cornerback',
+          yearEnrolled: 2010,
+          isTransfer: false,
+          isActive: false,
+        },
+        {
+          id: expect.any(Number),
+          name: 'Joe Walker',
+          position: 'Linebacker',
+          yearEnrolled: 2012,
+          isTransfer: true,
+          isActive: false,
+        },
+        {
+          id: expect.any(Number),
+          name: 'Travis Dye',
+          position: 'Running back',
+          yearEnrolled: 2018,
+          isTransfer: false,
+          isActive: true,
+        }
+      ]);
+    });
+  });
 });
+
