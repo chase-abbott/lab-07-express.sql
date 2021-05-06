@@ -6,15 +6,31 @@ import { execSync } from 'child_process';
 const request = supertest(app);
 
 describe('API ROUTES', () => {
+  
   afterAll(async () => {
     return client.end();
   });
 
-  beforeAll(() => {
-    execSync('npm run recreate-tables');
-  });
+  describe('CRUD routes', () => {
 
-  describe('CRUD routs', () => {
+    let user;
+
+    beforeAll(async () => {
+      execSync('npm run recreate-tables');
+  
+      const response = await request
+        .post('/api/auth/signup')
+        .send({
+          name: 'Chase',
+          email: 'cabbott93@gmail.com',
+          password: 'x'
+        });
+  
+      expect(response.status).toBe(200);
+
+      user = response.body;
+      console.log(user);
+    });
 
     let marcus = {
       id: expect.any(Number),
@@ -44,17 +60,19 @@ describe('API ROUTES', () => {
     };
 
     it('POST /api/players', async () => {
+      marcus.userId = user.id;
+     
       const response = await request
         .post('/api/players')
         .send(marcus);
-  
+     
       expect(response.status).toBe(200);
       expect(response.body).toEqual(marcus);
 
       marcus = response.body;
     });
 
-    it('PUT /api/players/:id', async () => {
+    it.skip('PUT /api/players/:id', async () => {
       marcus.isActive = true;
       const response = await request
         .put(`/api/players/${marcus.id}`)
@@ -63,7 +81,7 @@ describe('API ROUTES', () => {
       expect(response.body).toEqual(marcus);
     });
 
-    it('GET /api/players', async () => {
+    it.skip('GET /api/players', async () => {
       const playerOne = await request
         .post('/api/players')
         .send(royce);
@@ -79,13 +97,13 @@ describe('API ROUTES', () => {
       expect(response.body).toEqual(expect.arrayContaining([marcus, donte, royce]));
     });
 
-    it('GET /api/players/:id', async () => {
+    it.skip('GET /api/players/:id', async () => {
       const response = await request.get(`/api/players/${marcus.id}`);
       expect(response.status).toBe(200);
       expect(response.body).toEqual(marcus);
     });
 
-    it('DELETE /api/players/:id', async () => {
+    it.skip('DELETE /api/players/:id', async () => {
       const response = await request 
         .delete(`/api/players/${marcus.id}`);
       const secondResponse = await request.get('/api/players');
@@ -94,7 +112,7 @@ describe('API ROUTES', () => {
     });
   });
 
-  describe('Re-seed data', () => {
+  describe.skip('Re-seed data', () => {
 
     beforeAll(() => {
       execSync('npm run setup-db');

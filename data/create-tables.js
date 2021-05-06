@@ -7,16 +7,23 @@ run();
 async function run() {
 
   try {
-
     // run a query to create tables
-    await client.query(`          
+    await client.query(`
+      CREATE TABLE users (
+        id SERIAL PRIMARY KEY NOT NULL,
+        name VARCHAR(64) NOT NULL,
+        email VARCHAR(128) NOT NULL,
+        password VARCHAR(64) NOT NULL
+      );
+
       CREATE TABLE players (
         id SERIAL PRIMARY KEY NOT NULL,
         name VARCHAR(64) NOT NULL,
         position VARCHAR(32) NOT NULL,
         year_enrolled INTEGER NOT NULL,
         is_transfer BOOLEAN NOT NULL,
-        is_active BOOLEAN DEFAULT FALSE
+        is_active BOOLEAN DEFAULT FALSE,
+        user_id INTEGER NOT NULL REFERENCES users(id)
       );
     `);
 
