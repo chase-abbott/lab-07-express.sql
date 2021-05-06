@@ -115,12 +115,13 @@ describe('API ROUTES', () => {
       expect(response.body).toEqual({ ...marcus, userName: user.name });
     });
 
-    it.skip('DELETE /api/players/:id', async () => {
+    it('DELETE /api/players/:id', async () => {
       const response = await request 
         .delete(`/api/players/${marcus.id}`);
       const secondResponse = await request.get('/api/players');
+      console.log(secondResponse.body);
       expect(response.status).toBe(200);
-      expect(secondResponse.body).toEqual(expect.arrayContaining([donte, royce]));
+      expect(secondResponse.body.find(player => player.id === marcus.id)).toBeUndefined();
     });
   });
 
