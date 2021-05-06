@@ -125,7 +125,7 @@ describe('API ROUTES', () => {
     });
   });
 
-  describe.skip('Re-seed data', () => {
+  describe('Re-seed data', () => {
 
     beforeAll(() => {
       execSync('npm run setup-db');
@@ -143,6 +143,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2011,
           isTransfer: false,
           isActive: false,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         },
         {
           id: expect.any(Number),
@@ -151,6 +153,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2014,
           isTransfer: false,
           isActive: false,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         },
         {
           id: expect.any(Number),
@@ -159,6 +163,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2021,
           isTransfer: false,
           isActive: true,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         },
         {
           id: expect.any(Number),
@@ -167,6 +173,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2016,
           isTransfer: false,
           isActive: false,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         },
         {
           id: expect.any(Number),
@@ -175,6 +183,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2020,
           isTransfer: true,
           isActive: true,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         },
         {
           id: expect.any(Number),
@@ -183,6 +193,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2018,
           isTransfer: false,
           isActive: true,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         },
         {
           id: expect.any(Number),
@@ -191,6 +203,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2011,
           isTransfer: false,
           isActive: false,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         },
         {
           id: expect.any(Number),
@@ -199,6 +213,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2020,
           isTransfer: true,
           isActive: true,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         },
         {
           id: expect.any(Number),
@@ -207,6 +223,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2010,
           isTransfer: false,
           isActive: false,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         },
         {
           id: expect.any(Number),
@@ -215,6 +233,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2012,
           isTransfer: true,
           isActive: false,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         },
         {
           id: expect.any(Number),
@@ -223,6 +243,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2018,
           isTransfer: false,
           isActive: true,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         }
       ]);
     });
