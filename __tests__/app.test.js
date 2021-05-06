@@ -93,4 +93,108 @@ describe('API ROUTES', () => {
       expect(secondResponse.body).toEqual(expect.arrayContaining([donte, royce]));
     });
   });
+
+  describe('Re-seed data', () => {
+
+    beforeAll(() => {
+      execSync('npm run setup-db');
+    });
+
+    it('GET all players', async () => {
+      const response = await request.get('/api/players');
+  
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual([
+        {
+          id: expect.any(Number),
+          name: 'Marcus Mariota',
+          position: 'Quarterback',
+          yearEnrolled: 2011,
+          isTransfer: false,
+          isActive: false,
+        },
+        {
+          id: expect.any(Number),
+          name: 'Royce Freeman',
+          position: 'Running Back',
+          yearEnrolled: 2014,
+          isTransfer: false,
+          isActive: false,
+        },
+        {
+          id: expect.any(Number),
+          name: 'Donte Thorton',
+          position: 'Wide Reciever',
+          yearEnrolled: 2021,
+          isTransfer: false,
+          isActive: true,
+        },
+        {
+          id: expect.any(Number),
+          name: 'Troy Dye',
+          position: 'Linebacker',
+          yearEnrolled: 2016,
+          isTransfer: false,
+          isActive: false,
+        },
+        {
+          id: expect.any(Number),
+          name: 'Anthony Brown',
+          position: 'Quarterback',
+          yearEnrolled: 2020,
+          isTransfer: true,
+          isActive: true,
+        },
+        {
+          id: expect.any(Number),
+          name: 'Mycah Pittman',
+          position: 'Wide Reciever',
+          yearEnrolled: 2018,
+          isTransfer: false,
+          isActive: true,
+        },
+        {
+          id: expect.any(Number),
+          name: 'Arik Armstead',
+          position: 'Defensive End',
+          yearEnrolled: 2011,
+          isTransfer: false,
+          isActive: false,
+        },
+        {
+          id: expect.any(Number),
+          name: 'Devon Williams',
+          position: 'Wide Reciever',
+          yearEnrolled: 2020,
+          isTransfer: true,
+          isActive: true,
+        },
+        {
+          id: expect.any(Number),
+          name: 'Ifo Ekpre-Olomu',
+          position: 'Cornerback',
+          yearEnrolled: 2010,
+          isTransfer: false,
+          isActive: false,
+        },
+        {
+          id: expect.any(Number),
+          name: 'Joe Walker',
+          position: 'Linebacker',
+          yearEnrolled: 2012,
+          isTransfer: true,
+          isActive: false,
+        },
+        {
+          id: expect.any(Number),
+          name: 'Travis Dye',
+          position: 'Running back',
+          yearEnrolled: 2018,
+          isTransfer: false,
+          isActive: true,
+        }
+      ]);
+    });
+  });
 });
+
