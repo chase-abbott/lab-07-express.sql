@@ -72,7 +72,7 @@ describe('API ROUTES', () => {
       marcus = response.body;
     });
 
-    it.skip('PUT /api/players/:id', async () => {
+    it('PUT /api/players/:id', async () => {
       marcus.isActive = true;
       const response = await request
         .put(`/api/players/${marcus.id}`)
