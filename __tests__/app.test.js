@@ -29,7 +29,6 @@ describe('API ROUTES', () => {
       expect(response.status).toBe(200);
 
       user = response.body;
-      console.log(user);
     });
 
     let marcus = {
@@ -81,20 +80,33 @@ describe('API ROUTES', () => {
       expect(response.body).toEqual(marcus);
     });
 
-    it.skip('GET /api/players', async () => {
+    it('GET /api/players', async () => {
+      royce.userId = user.id;
       const playerOne = await request
         .post('/api/players')
         .send(royce);
+
       royce = playerOne.body;
+
+      donte.userId = user.id;
       const playerTwo = await request
         .post('/api/players')
         .send(donte);
+
       donte = playerTwo.body;
+
 
       const response = await request.get('/api/players');
 
+      const expected = [marcus, royce, donte].map(player => {
+        return {
+          userName: user.name,
+          ...player
+        };
+      });
+
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(expect.arrayContaining([marcus, donte, royce]));
+      expect(response.body).toEqual(expect.arrayContaining(expected));
     });
 
     it.skip('GET /api/players/:id', async () => {
