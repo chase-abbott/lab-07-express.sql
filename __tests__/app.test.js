@@ -118,9 +118,11 @@ describe('API ROUTES', () => {
     it('GET /api/users/:id/players', async () => {
       const response = await request
         .get(`/api/users/${user.id}/players`);
+      donte.userId = 2;
      
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(expect.arrayContaining([marcus, donte, royce]));
+      expect(response.body).toEqual(expect.arrayContaining([marcus, royce]));
+      donte.userId = user.id;
     });
 
     it('DELETE /api/players/:id', async () => {
