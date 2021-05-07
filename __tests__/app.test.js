@@ -115,11 +115,19 @@ describe('API ROUTES', () => {
       expect(response.body).toEqual({ ...marcus, userName: user.name });
     });
 
+    it('GET /api/users/:id/players', async () => {
+      const response = await request
+        .get(`/api/users/${user.id}/players`);
+     
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(expect.arrayContaining([marcus, donte, royce]));
+    });
+
     it('DELETE /api/players/:id', async () => {
       const response = await request 
         .delete(`/api/players/${marcus.id}`);
       const secondResponse = await request.get('/api/players');
-      console.log(secondResponse.body);
+     
       expect(response.status).toBe(200);
       expect(secondResponse.body.find(player => player.id === marcus.id)).toBeUndefined();
     });
