@@ -20,6 +20,7 @@ async function run() {
         id SERIAL PRIMARY KEY NOT NULL,
         name VARCHAR(64) NOT NULL,
         position VARCHAR(32) NOT NULL,
+        url_image VARCHAR(8192) NOT NULL,
         year_enrolled INTEGER NOT NULL,
         is_transfer BOOLEAN NOT NULL,
         is_active BOOLEAN DEFAULT FALSE,

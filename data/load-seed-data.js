@@ -23,10 +23,10 @@ async function run() {
       players.map(player => {
        
         return client.query(`
-          INSERT INTO players (name, position, year_enrolled, is_transfer, is_active, user_id)
-          VALUES ($1, $2, $3, $4, $5, $6);
+          INSERT INTO players (name, position, url_image, year_enrolled, is_transfer, is_active, user_id)
+          VALUES ($1, $2, $3, $4, $5, $6, $7);
         `,
-        [player.name, player.position, player.yearEnrolled, player.isTransfer, player.isActive, user.id]);
+        [player.name, player.position, player.url_image, player.yearEnrolled, player.isTransfer, player.isActive, user.id]);
       })
     );
     console.log('seed data load complete');

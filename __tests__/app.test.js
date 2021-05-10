@@ -130,7 +130,6 @@ describe('API ROUTES', () => {
       const response = await request
         .get(`/api/users/${user.id}/players`);
       
-     
       expect(response.status).toBe(200);
       expect(response.body).toEqual(expect.arrayContaining([marcus, royce]));
       donte.userId = user.id;

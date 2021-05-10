@@ -3,6 +3,7 @@ const players = [
   {
     name: 'Marcus Mariota',
     position: 'Quarterback',
+    url_image: '/players/marcus.png',
     yearEnrolled: 2011,
     isTransfer: false,
     isActive: false,
@@ -10,6 +11,7 @@ const players = [
   {
     name: 'Royce Freeman',
     position: 'Running Back',
+    url_image: '/players/royce.png',
     yearEnrolled: 2014,
     isTransfer: false,
     isActive: false,
@@ -17,6 +19,7 @@ const players = [
   {
     name: 'Donte Thorton',
     position: 'Wide Reciever',
+    url_image: '/players/donte.png',
     yearEnrolled: 2021,
     isTransfer: false,
     isActive: true,
@@ -24,6 +27,7 @@ const players = [
   {
     name: 'Troy Dye',
     position: 'Linebacker',
+    url_image: '/players/troy.png',
     yearEnrolled: 2016,
     isTransfer: false,
     isActive: false,
@@ -31,6 +35,7 @@ const players = [
   {
     name: 'Anthony Brown',
     position: 'Quarterback',
+    url_image: '/players/anthony.png',
     yearEnrolled: 2020,
     isTransfer: true,
     isActive: true,
@@ -38,6 +43,7 @@ const players = [
   {
     name: 'Mycah Pittman',
     position: 'Wide Reciever',
+    url_image: '/players/mycah.png',
     yearEnrolled: 2018,
     isTransfer: false,
     isActive: true,
@@ -45,6 +51,7 @@ const players = [
   {
     name: 'Arik Armstead',
     position: 'Defensive End',
+    url_image: '/players/arik.png',
     yearEnrolled: 2011,
     isTransfer: false,
     isActive: false,
@@ -52,6 +59,7 @@ const players = [
   {
     name: 'Devon Williams',
     position: 'Wide Reciever',
+    url_image: '/players/devon.png',
     yearEnrolled: 2020,
     isTransfer: true,
     isActive: true,
@@ -59,6 +67,7 @@ const players = [
   {
     name: 'Ifo Ekpre-Olomu',
     position: 'Cornerback',
+    url_image: '/players/ifo.png',
     yearEnrolled: 2010,
     isTransfer: false,
     isActive: false,
@@ -66,6 +75,7 @@ const players = [
   {
     name: 'Joe Walker',
     position: 'Linebacker',
+    url_image: '/players/joe.png',
     yearEnrolled: 2012,
     isTransfer: true,
     isActive: false,
@@ -73,6 +83,7 @@ const players = [
   {
     name: 'Travis Dye',
     position: 'Running back',
+    url_image: '/players/travis.png',
     yearEnrolled: 2018,
     isTransfer: false,
     isActive: true,
