@@ -14,6 +14,7 @@ describe('API ROUTES', () => {
   describe('CRUD routes', () => {
 
     let user;
+    let secondUser;
 
     beforeAll(async () => {
       execSync('npm run recreate-tables');
@@ -24,16 +25,21 @@ describe('API ROUTES', () => {
           name: 'Chase',
           email: 'cabbott93@gmail.com',
           password: 'x'
-        },
-        {
-          name: 'Chase',
-          email: 'cabbott93@gmail.com',
-          password: 'y'
         });
+      
+      const secondResponse = await request
+        .post('/api/auth/signup')
+        .send(
+          { name: 'Chase',
+            email: 'cabbott93@gmail.com',
+            password: 'y'
+          });
   
       expect(response.status).toBe(200);
+      expect(secondResponse.status).toBe(200);
 
       user = response.body;
+      secondUser = secondResponse.body;
     });
 
     let marcus = {
@@ -93,7 +99,7 @@ describe('API ROUTES', () => {
 
       royce = playerOne.body;
 
-      donte.userId = 2;
+      donte.userId = secondUser.id;
       const playerTwo = await request
         .post('/api/players')
         .send(donte);
@@ -151,116 +157,6 @@ describe('API ROUTES', () => {
   
       expect(response.status).toBe(200);
       expect(response.body).toEqual([
-        {
-          id: expect.any(Number),
-          name: 'Marcus Mariota',
-          position: 'Quarterback',
-          yearEnrolled: 2011,
-          isTransfer: false,
-          isActive: false,
-          userId: expect.any(Number),
-          userName: expect.any(String)
-        },
-        {
-          id: expect.any(Number),
-          name: 'Royce Freeman',
-          position: 'Running Back',
-          yearEnrolled: 2014,
-          isTransfer: false,
-          isActive: false,
-          userId: expect.any(Number),
-          userName: expect.any(String)
-        },
-        {
-          id: expect.any(Number),
-          name: 'Donte Thorton',
-          position: 'Wide Reciever',
-          yearEnrolled: 2021,
-          isTransfer: false,
-          isActive: true,
-          userId: expect.any(Number),
-          userName: expect.any(String)
-        },
-        {
-          id: expect.any(Number),
-          name: 'Troy Dye',
-          position: 'Linebacker',
-          yearEnrolled: 2016,
-          isTransfer: false,
-          isActive: false,
-          userId: expect.any(Number),
-          userName: expect.any(String)
-        },
-        {
-          id: expect.any(Number),
-          name: 'Anthony Brown',
-          position: 'Quarterback',
-          yearEnrolled: 2020,
-          isTransfer: true,
-          isActive: true,
-          userId: expect.any(Number),
-          userName: expect.any(String)
-        },
-        {
-          id: expect.any(Number),
-          name: 'Mycah Pittman',
-          position: 'Wide Reciever',
-          yearEnrolled: 2018,
-          isTransfer: false,
-          isActive: true,
-          userId: expect.any(Number),
-          userName: expect.any(String)
-        },
-        {
-          id: expect.any(Number),
-          name: 'Arik Armstead',
-          position: 'Defensive End',
-          yearEnrolled: 2011,
-          isTransfer: false,
-          isActive: false,
-          userId: expect.any(Number),
-          userName: expect.any(String)
-        },
-        {
-          id: expect.any(Number),
-          name: 'Devon Williams',
-          position: 'Wide Reciever',
-          yearEnrolled: 2020,
-          isTransfer: true,
-          isActive: true,
-          userId: expect.any(Number),
-          userName: expect.any(String)
-        },
-        {
-          id: expect.any(Number),
-          name: 'Ifo Ekpre-Olomu',
-          position: 'Cornerback',
-          yearEnrolled: 2010,
-          isTransfer: false,
-          isActive: false,
-          userId: expect.any(Number),
-          userName: expect.any(String)
-        },
-        {
-          id: expect.any(Number),
-          name: 'Joe Walker',
-          position: 'Linebacker',
-          yearEnrolled: 2012,
-          isTransfer: true,
-          isActive: false,
-          userId: expect.any(Number),
-          userName: expect.any(String)
-        },
-        {
-          id: expect.any(Number),
-          name: 'Travis Dye',
-          position: 'Running back',
-          yearEnrolled: 2018,
-          isTransfer: false,
-          isActive: true,
-          userId: expect.any(Number),
-          userName: expect.any(String)
-        },
         {
           id: expect.any(Number),
           name: 'Marcus Mariota',
