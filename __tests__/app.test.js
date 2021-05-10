@@ -14,6 +14,7 @@ describe('API ROUTES', () => {
   describe('CRUD routes', () => {
 
     let user;
+    let secondUser;
 
     beforeAll(async () => {
       execSync('npm run recreate-tables');
@@ -25,11 +26,20 @@ describe('API ROUTES', () => {
           email: 'cabbott93@gmail.com',
           password: 'x'
         });
+      
+      const secondResponse = await request
+        .post('/api/auth/signup')
+        .send(
+          { name: 'Chase',
+            email: 'cabbott93@gmail.com',
+            password: 'y'
+          });
   
       expect(response.status).toBe(200);
+      expect(secondResponse.status).toBe(200);
 
       user = response.body;
-      console.log(user);
+      secondUser = secondResponse.body;
     });
 
     let marcus = {
@@ -72,7 +82,7 @@ describe('API ROUTES', () => {
       marcus = response.body;
     });
 
-    it.skip('PUT /api/players/:id', async () => {
+    it('PUT /api/players/:id', async () => {
       marcus.isActive = true;
       const response = await request
         .put(`/api/players/${marcus.id}`)
@@ -81,38 +91,62 @@ describe('API ROUTES', () => {
       expect(response.body).toEqual(marcus);
     });
 
-    it.skip('GET /api/players', async () => {
+    it('GET /api/players', async () => {
+      royce.userId = user.id;
       const playerOne = await request
         .post('/api/players')
         .send(royce);
+
       royce = playerOne.body;
+
+      donte.userId = secondUser.id;
       const playerTwo = await request
         .post('/api/players')
         .send(donte);
+
       donte = playerTwo.body;
+
 
       const response = await request.get('/api/players');
 
+      const expected = [marcus, royce, donte].map(player => {
+        return {
+          userName: user.name,
+          ...player
+        };
+      });
+
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(expect.arrayContaining([marcus, donte, royce]));
+      expect(response.body).toEqual(expect.arrayContaining(expected));
     });
 
-    it.skip('GET /api/players/:id', async () => {
+    it('GET /api/players/:id', async () => {
       const response = await request.get(`/api/players/${marcus.id}`);
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(marcus);
+      expect(response.body).toEqual({ ...marcus, userName: user.name });
     });
 
-    it.skip('DELETE /api/players/:id', async () => {
+    it('GET /api/users/:id/players', async () => {
+      const response = await request
+        .get(`/api/users/${user.id}/players`);
+      
+     
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(expect.arrayContaining([marcus, royce]));
+      donte.userId = user.id;
+    });
+
+    it('DELETE /api/players/:id', async () => {
       const response = await request 
         .delete(`/api/players/${marcus.id}`);
       const secondResponse = await request.get('/api/players');
+     
       expect(response.status).toBe(200);
-      expect(secondResponse.body).toEqual(expect.arrayContaining([donte, royce]));
+      expect(secondResponse.body.find(player => player.id === marcus.id)).toBeUndefined();
     });
   });
 
-  describe.skip('Re-seed data', () => {
+  describe('Re-seed data', () => {
 
     beforeAll(() => {
       execSync('npm run setup-db');
@@ -130,6 +164,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2011,
           isTransfer: false,
           isActive: false,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         },
         {
           id: expect.any(Number),
@@ -138,6 +174,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2014,
           isTransfer: false,
           isActive: false,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         },
         {
           id: expect.any(Number),
@@ -146,6 +184,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2021,
           isTransfer: false,
           isActive: true,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         },
         {
           id: expect.any(Number),
@@ -154,6 +194,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2016,
           isTransfer: false,
           isActive: false,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         },
         {
           id: expect.any(Number),
@@ -162,6 +204,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2020,
           isTransfer: true,
           isActive: true,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         },
         {
           id: expect.any(Number),
@@ -170,6 +214,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2018,
           isTransfer: false,
           isActive: true,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         },
         {
           id: expect.any(Number),
@@ -178,6 +224,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2011,
           isTransfer: false,
           isActive: false,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         },
         {
           id: expect.any(Number),
@@ -186,6 +234,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2020,
           isTransfer: true,
           isActive: true,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         },
         {
           id: expect.any(Number),
@@ -194,6 +244,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2010,
           isTransfer: false,
           isActive: false,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         },
         {
           id: expect.any(Number),
@@ -202,6 +254,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2012,
           isTransfer: true,
           isActive: false,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         },
         {
           id: expect.any(Number),
@@ -210,6 +264,8 @@ describe('API ROUTES', () => {
           yearEnrolled: 2018,
           isTransfer: false,
           isActive: true,
+          userId: expect.any(Number),
+          userName: expect.any(String)
         }
       ]);
     });
