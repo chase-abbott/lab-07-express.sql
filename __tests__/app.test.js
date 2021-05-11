@@ -46,6 +46,7 @@ describe('API ROUTES', () => {
       id: expect.any(Number),
       name: 'Marcus Mariota',
       position: 'Quarterback',
+      url_image: 'marcus.jpeg',
       yearEnrolled: 2011,
       isTransfer: false,
       isActive: false,
@@ -71,6 +72,7 @@ describe('API ROUTES', () => {
 
     it('POST /api/players', async () => {
       marcus.userId = user.id;
+      console.log(marcus);
      
       const response = await request
         .post('/api/players')
@@ -82,7 +84,7 @@ describe('API ROUTES', () => {
       marcus = response.body;
     });
 
-    it('PUT /api/players/:id', async () => {
+    it.skip('PUT /api/players/:id', async () => {
       marcus.isActive = true;
       const response = await request
         .put(`/api/players/${marcus.id}`)
@@ -91,7 +93,7 @@ describe('API ROUTES', () => {
       expect(response.body).toEqual(marcus);
     });
 
-    it('GET /api/players', async () => {
+    it.skip('GET /api/players', async () => {
       royce.userId = user.id;
       const playerOne = await request
         .post('/api/players')
@@ -120,13 +122,13 @@ describe('API ROUTES', () => {
       expect(response.body).toEqual(expect.arrayContaining(expected));
     });
 
-    it('GET /api/players/:id', async () => {
+    it.skip('GET /api/players/:id', async () => {
       const response = await request.get(`/api/players/${marcus.id}`);
       expect(response.status).toBe(200);
       expect(response.body).toEqual({ ...marcus, userName: user.name });
     });
 
-    it('GET /api/users/:id/players', async () => {
+    it.skip('GET /api/users/:id/players', async () => {
       const response = await request
         .get(`/api/users/${user.id}/players`);
       
@@ -135,7 +137,7 @@ describe('API ROUTES', () => {
       donte.userId = user.id;
     });
 
-    it('DELETE /api/players/:id', async () => {
+    it.skip('DELETE /api/players/:id', async () => {
       const response = await request 
         .delete(`/api/players/${marcus.id}`);
       const secondResponse = await request.get('/api/players');
@@ -145,7 +147,7 @@ describe('API ROUTES', () => {
     });
   });
 
-  describe('Re-seed data', () => {
+  describe.skip('Re-seed data', () => {
 
     beforeAll(() => {
       execSync('npm run setup-db');
