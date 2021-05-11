@@ -72,12 +72,11 @@ describe('API ROUTES', () => {
 
     it('POST /api/players', async () => {
       marcus.userId = user.id;
-      console.log(marcus);
      
       const response = await request
         .post('/api/players')
         .send(marcus);
-     
+      console.log(response.body);
       expect(response.status).toBe(200);
       expect(response.body).toEqual(marcus);
 
